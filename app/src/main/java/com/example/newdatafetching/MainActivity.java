@@ -2,6 +2,7 @@ package com.example.newdatafetching;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -13,7 +14,10 @@ import com.google.gson.Gson;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -22,13 +26,18 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity {
+    MyDatabaseHelper myDatabaseHelper;
+    Map<String, List<Double>> map = new HashMap<String, List<Double>>();
+    List<Double> list = new ArrayList<Double>();
     String a = "";
-    String aa="",bb="";
+    double aa=0.0,bb=0.0;
     TextView textView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        myDatabaseHelper = new MyDatabaseHelper(this);
+        SQLiteDatabase sqLiteDatabase = myDatabaseHelper.getWritableDatabase();
         textView = (TextView)findViewById(R.id.text_appear);
         //getResults();
         //textView.setText(a);
@@ -57,8 +66,8 @@ public class MainActivity extends AppCompatActivity {
                     if (obj!=null){
                         try {
                             JSONObject locationObj = new JSONObject(json);
-                            aa = locationObj.getString("latitude");
-                            bb = locationObj.getString("longitude");
+                            aa = Double.parseDouble(locationObj.getString("latitude"));
+                            bb = Double.parseDouble(locationObj.getString("longitude"));
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -66,13 +75,14 @@ public class MainActivity extends AppCompatActivity {
                         //bb = (String) jsonObject.get("longitude");
                     }
                     else {
-                        aa = "N/A";
-                        bb = "N/A";
+                        aa = 0.0;
+                        bb = 0.0;
                     }
+                    list.add(aa);
+                    list.add(bb);
+                    map.put(a, list);
                     a = a+" "+aa+" "+bb+"\n";
-                    //textView.setText(a);
-                    //Log.d("latitude",f.getLocation().toString());
-                    //Log.d("latitude",f.getLatitude().toString());
+
                 }
                 textView.setText(a);
             }
