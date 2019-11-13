@@ -59,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
                 List<Fetcher>  fetchers  = response.body();
                 for (Fetcher f:fetchers){
                     Log.d("name",f.getName());
+                    String nameGet = f.getName().toString();
                     a = a+f.getName().toString()+" ";
                     Gson gson = new Gson();
                     Object obj = f.getLocation();
@@ -78,13 +79,22 @@ public class MainActivity extends AppCompatActivity {
                         aa = 0.0;
                         bb = 0.0;
                     }
-                    list.add(aa);
-                    list.add(bb);
-                    map.put(a, list);
-                    a = a+" "+aa+" "+bb+"\n";
+                    long rowId = myDatabaseHelper.insertData(nameGet,aa,bb);
+                    if(rowId>0){
+                        list.add(aa);
+                        list.add(bb);
+                        map.put(nameGet, list);
+                        a = a+" "+aa+" "+bb+"\n";
+                        textView.setText(a);
+                        Toast.makeText(getApplicationContext(),"Added data",Toast.LENGTH_SHORT).show();
+                    }
+                    else {
+                        Toast.makeText(getApplicationContext(),"failed to add",Toast.LENGTH_SHORT).show();
+                    }
+
 
                 }
-                textView.setText(a);
+
             }
 
             @Override
