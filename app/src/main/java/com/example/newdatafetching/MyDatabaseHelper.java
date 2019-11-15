@@ -24,6 +24,8 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     private static final String CREATE_TABLE = "CREATE TABLE "+TABLE_NAME+"("+ID+" INTEGER PRIMARY KEY AUTOINCREMENT, "+NAME+" VARCHAR(255),"
             +latitude+" REAL, "+longitude+" REAL,"+fetch+" INTEGER);";
     private static final String DROP_TABLE = "DROP TABLE IF EXISTS "+TABLE_NAME;
+    private static final String SELECT_ALL = "SELECT * FROM "+TABLE_NAME;
+
 
 
     /*private static final String DATABASE_NAME = "student.db";
@@ -84,14 +86,13 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
             return rowId;
         }
         else {
-            Toast.makeText(context,"Data is already here!",Toast.LENGTH_SHORT).show();
+            //Toast.makeText(context,"Data is already here!",Toast.LENGTH_SHORT).show();
             return -1;
         }
-        /*contentValues.put(NAME,names);
-        contentValues.put(longitude,longitudes);
-        contentValues.put(latitude,latitudes);
-        contentValues.put(fetch,1);
-        long rowId = sqLiteDatabase.insert(TABLE_NAME,null,contentValues);
-        return rowId;*/
+    }
+    public Cursor retrieveData(){
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+        Cursor cursor = sqLiteDatabase.rawQuery(SELECT_ALL,null);
+        return cursor;
     }
 }
