@@ -58,6 +58,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     * This method adds data in the list
      */
     public void addDatas(View view){
+        getResults();
+        arrayList.clear();
+        //arrayAdapter.notifyDataSetChanged();
         Cursor cursor = myDatabaseHelper.retrieveData();
 
         if(cursor.getCount()==0) return;
