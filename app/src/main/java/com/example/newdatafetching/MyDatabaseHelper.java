@@ -25,17 +25,6 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
             +latitude+" REAL, "+longitude+" REAL,"+fetch+" INTEGER);";
     private static final String DROP_TABLE = "DROP TABLE IF EXISTS "+TABLE_NAME;
     private static final String SELECT_ALL = "SELECT * FROM "+TABLE_NAME;
-
-
-
-    /*private static final String DATABASE_NAME = "student.db";
-    private static final String TABLE_NAME = "student_details";
-    private static final String ID = "_id";
-    private static final String NAME = "Name";
-    private static final String AGE = "Age";
-    private static final int DATABASE_VERSION_NO = 1;
-    private static final String CREATE_TABLE = "CREATE TABLE "+TABLE_NAME+"("+ID+" INTEGER PRIMARY KEY AUTOINCREMENT,"+NAME+" VARCHAR(255),"+AGE+" INTEGER);";
-    */
     private Context context;
 
     public MyDatabaseHelper(Context context) {
@@ -67,11 +56,25 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
 
     }
 
+    /**
+     * For checking if the persons name already exists in the database.
+     * @param checkName
+     * @return
+     */
+
     public Cursor checkData(String checkName){
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
         Cursor cursor = sqLiteDatabase.rawQuery(SELECT_NAME+"'"+checkName+"'"+" ;",null);
         return cursor;
     }
+
+    /**
+     * For INSERTING the data on database.
+     * @param names
+     * @param latitudes
+     * @param longitudes
+     * @return
+     */
 
     public long insertData(String names, double latitudes, double longitudes){
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
@@ -90,11 +93,24 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
             return -1;
         }
     }
+
+    /**
+     * For SELECTING the data from the database.
+     * @return
+     */
+
     public Cursor retrieveData(){
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
         Cursor cursor = sqLiteDatabase.rawQuery(SELECT_ALL,null);
         return cursor;
     }
+
+    /**
+     * For updating the data.
+     * @param name
+     * @param lat
+     * @param longt
+     */
 
     public void updateData(String name, Double lat, Double longt){
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();

@@ -28,9 +28,21 @@ public class TimerDialog extends AppCompatDialogFragment {
     int time = 0;
     Context mContext;
 
+    /**
+     * To get the context from the activities.
+     * @param context
+     */
     TimerDialog(Context context){
         mContext = context;
     }
+
+    /**
+     * Overrides the methods for the dialog.
+     * One for OK button
+     * One for cancel button
+     * @param savedInstanceState
+     * @return
+     */
 
     @NonNull
     @Override

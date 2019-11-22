@@ -56,11 +56,14 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         addDatas(addButton);
         listView.setOnItemClickListener(this);
     }
-    /*
-    *
-    *
-    * This method adds data in the list
+
+    /**
+     *
+     * @param view
+     * This method adds data in the list
+     * Takes data from the database
      */
+
     public void addDatas(View view){
         getResults();
         arrayList.clear();
@@ -87,6 +90,15 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         arrayAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,arrayList);
         listView.setAdapter(arrayAdapter);
     }
+
+    /**
+     * Goes to the map activity when any listView object is pressed
+     * @param parent
+     * @param view
+     * @param position
+     * @param id
+     */
+
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         String val =(String) parent.getItemAtPosition(position);
@@ -108,10 +120,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     }
 
 
-    /*
-    .
-    .
-    .This method gets all the data from the servers
+    /**
+     *
+     * This method gets all the data from the servers
      */
     public void getResults(){
         Retrofit retrofit = new Retrofit.Builder()
