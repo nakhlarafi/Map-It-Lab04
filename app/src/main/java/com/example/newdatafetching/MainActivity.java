@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -40,6 +41,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     String a = "";
     double aa=0.0,bb=0.0;
     ListView listView;
+    Button addButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,9 +49,11 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         myDatabaseHelper = new MyDatabaseHelper(this);
         SQLiteDatabase sqLiteDatabase = myDatabaseHelper.getWritableDatabase();
         listView = (ListView) findViewById(R.id.items_list);
+        addButton = findViewById(R.id.add_button);
         //getResults();
         //textView.setText(a);
         getResults();
+        addDatas(addButton);
         listView.setOnItemClickListener(this);
     }
     /*
@@ -167,6 +171,15 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 Toast.makeText(getApplicationContext(),t.getMessage(),Toast.LENGTH_LONG).show();
             }
         });
+    }
+
+    @Override
+    public void onBackPressed()
+    {
+        Intent intent = new Intent(Intent.ACTION_MAIN);
+        intent.addCategory(Intent.CATEGORY_HOME);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
     }
 
 }

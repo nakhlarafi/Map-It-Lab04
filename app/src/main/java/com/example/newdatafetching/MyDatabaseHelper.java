@@ -95,4 +95,14 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         Cursor cursor = sqLiteDatabase.rawQuery(SELECT_ALL,null);
         return cursor;
     }
+
+    public void updateData(String name, Double lat, Double longt){
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(NAME,name);
+        contentValues.put(latitude,lat);
+        contentValues.put(longitude,longt);
+        sqLiteDatabase.update(TABLE_NAME,contentValues,"Name = ?",new String[]{name});
+        //return true;
+    }
 }
